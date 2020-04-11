@@ -614,6 +614,28 @@ static int xml_stringValue(lua_State *L) {
     return 1 ;
 }
 
+/// hs._asm.xml:setStringValue(value) -> string
+/// Method
+/// Returns the content of the xmlObject as a string value.
+///
+/// Parameters:
+///  * value - The value you want to set the string value to.
+///
+/// Returns:
+///  * the content of the xmlObject as a string value.
+static int xml_setStringValue(lua_State *L) {
+    LuaSkin *skin = [LuaSkin sharedWithState:L] ;
+    [skin checkArgs:LS_TUSERDATA, USERDATA_TAG, LS_TSTRING, LS_TBREAK] ;
+
+    NSXMLNode *obj = [skin toNSObjectAtIndex:1] ;
+
+    NSString *value = [skin toNSObjectAtIndex:2] ;
+    [obj setStringValue:value];
+
+    [skin pushNSObject:[obj stringValue]] ;
+    return 1 ;
+}
+
 /// hs._asm.xml:URI() -> string
 /// Method
 /// Returns the URI associated with the xmlObject.
@@ -1174,6 +1196,7 @@ static const luaL_Reg userdata_metaLib[] = {
     {"name",                        xml_name},
     {"objectValue",                 xml_objectValue},
     {"stringValue",                 xml_stringValue},
+    {"setStringValue",              xml_setStringValue},
     {"URI",                         xml_URI},
     {"localName",                   xml_localName},
     {"prefix",                      xml_prefix},
