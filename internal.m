@@ -17,7 +17,7 @@
 // should we allow creating an xml doc from scratch?
 
 #define USERDATA_TAG        "hs._asm.xml"
-static int refTable ;
+static LSRefTable refTable ;
 
 #define get_objectFromUserdata(objType, L, idx) (objType*)*((void**)luaL_checkudata(L, idx, USERDATA_TAG))
 
